@@ -2,12 +2,14 @@
 
 namespace Core\Table;
 
+use App\Model\Service;
 use Core\Database\Database;
 
 class Table{
 
-    private $db;
-    private $table;
+    protected $db;
+    protected $table;
+    protected $class;
 
     public function __construct(Database $db)
     {
@@ -21,7 +23,7 @@ class Table{
     }
 
     public function all(){
-    $this->query("SELECT * FROM {$this->table}");
+    return $this->query("SELECT * FROM {$this->table}");
     }
 
     public function query($sql, $attributes = null, $one = false){
@@ -35,7 +37,7 @@ class Table{
         }else{
             return $this->db->query(
                     $sql,
-                    str_replace('Table', '', get_class($this)),
+                    Service::class,
                     $one
                 );
         }
