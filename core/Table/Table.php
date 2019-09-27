@@ -17,4 +17,20 @@ class Table{
         }
 
     }
+
+    public function query($sql, $attributes = null, $one = false){
+        if($attributes){
+            return $this->db->prepare(
+                    $sql,
+                    $attributes,
+                    str_replace('Table', '', get_class($this)),
+                    $one
+            );
+        }else{
+            return $this->db->prepare(
+                    $sql,
+                    str_replace('Table', '', get_class($this)),
+                    $one);
+        }
+    }
 }
