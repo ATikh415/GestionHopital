@@ -6,7 +6,7 @@ use PDO;
 
 class Database{
 
-    private $dbname;
+    private $db_name;
     private $host;
     private $user;
     private $pass;
@@ -14,7 +14,7 @@ class Database{
 
     public function __construct($db_name, $host = 'localhost', $user= 'atikh', $pass ='Passer@415')
     {
-        $this->dbname = $db_name;
+        $this->db_name = $db_name;
         $this->host = $host;
         $this->user = $user;
         $this->pass = $pass;
@@ -30,7 +30,7 @@ class Database{
     }
 
     public function query(string $sql, ?string $class = null, $one = false){
-        $query = $this->pdo->query($sql);
+        $query = $this->getDB()->query($sql);
         if(
             \strpos($sql, 'INSERT') === 0 ||
             \strpos($sql, 'UPDATE') === 0 ||
@@ -53,7 +53,7 @@ class Database{
     }
 
     public function prepare(string $sql, $attributes, ?string $class = null, $one = false){
-        $req = $this->pdo->prepare($sql);
+        $req = $this->getDB()->prepare($sql);
         $result = $req->excute($attributes);
         if(
             \strpos($sql, 'INSERT') === 0 ||
