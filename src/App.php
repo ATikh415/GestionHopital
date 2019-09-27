@@ -3,13 +3,14 @@
 namespace App;
 
 use Core\Database\Database;
+use App\Config;
 
 class App{
 
     private static $instance;
     private $dbInstance;
 
-    public function getInstance(){
+    public static function getInstance(){
         if(self::$instance === null){
             self::$instance = new App();
         }
@@ -17,7 +18,7 @@ class App{
     }
 
     public function getTable($name){
-        $class_name = '\\App\\Table' . ucfirst($name) . 'Table';
+        $class_name = '\\App\\Table\\' . ucfirst($name) . 'Table';
         return new $class_name($this->getDb());
     }
 
