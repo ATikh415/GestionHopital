@@ -4,7 +4,8 @@ use Core\Router;
 
 require '../vendor/autoload.php';
 
-$router = new Router(dirname(__DIR__) . '/views');
+define('ROOT',dirname(__DIR__));
+$router = new Router( ROOT . '/views');
 
 $whoops = new \Whoops\Run;
 $whoops->prependHandler(new \Whoops\Handler\PrettyPageHandler);
