@@ -4,9 +4,21 @@ namespace App;
 
 class Config{
 
-    private  $instance;
+    private static $instance;
     private $settings = [];
 
+    public function __construct($file)
+    {
+        $this->settings = require ($file);
+    }
+
+    public static function getInstance($file){
+        if(self::$instance === null){
+            self::$instance = new Config($file);
+        }
+        return self::$instance;
+    }
 
     
+
 }
