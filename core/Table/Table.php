@@ -31,13 +31,13 @@ class Table{
             return $this->db->prepare(
                     $sql,
                     $attributes,
-                    str_replace('Table', '', get_class($this)),
+                    $this->class,
                     $one
             );
         }else{
             return $this->db->query(
                     $sql,
-                    Service::class,
+                    $this->class,
                     $one
                 );
         }
