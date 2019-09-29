@@ -54,25 +54,25 @@ class Database{
 
     public function prepare(string $sql, $attributes, ?string $class = null, $one = false){
         $req = $this->getDB()->prepare($sql);
-        $result = $req->excute($attributes);
+        $res = $req->excute($attributes);
         if(
             \strpos($sql, 'INSERT') === 0 ||
             \strpos($sql, 'UPDATE') === 0 ||
             \strpos($sql, 'DELETE') === 0 
 
         ){
-            return $result;
+            return $res;
         }
 
         if($class === null){
-            $req->setFetchMode(PDO::FETCH_OBJ);
+            $res->setFetchMode(PDO::FETCH_OBJ);
         }else{
-            $req->setFetchMode(PDO::FETCH_CLASS, $class);
+            $res->setFetchMode(PDO::FETCH_CLASS, $class);
         }
         if($one){
-            $data = $req->fetch();
+            $data = $res->fetch();
         }else{
-            $data = $req->fetchAll();
+            $data = $res->fetchAll();
         }
         return $data;
         
