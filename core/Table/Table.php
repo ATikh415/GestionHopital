@@ -2,7 +2,6 @@
 
 namespace Core\Table;
 
-use App\Model\Service;
 use Core\Database\Database;
 
 class Table{
@@ -23,7 +22,15 @@ class Table{
     }
 
     public function all(){
-    return $this->query("SELECT * FROM {$this->table}");
+        return $this->query("SELECT * FROM {$this->table}");
+    }
+
+    public function find(int $id){
+        return $this->query("SELECT * FROM {$this->table}
+        WHERE id = ?",
+        [$id],
+        true
+        );
     }
 
     public function query($sql, $attributes = null, $one = false){
