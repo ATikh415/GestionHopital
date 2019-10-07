@@ -30,12 +30,27 @@ HTML;
 
     }
 
+    public function radio(string $key, string $label, $val){
+        $value = $this->getValue($key);
+
+        $checked = $value == $val ? ' checked' : "";
+
+        return <<<HTML
+            <div class="form-check">
+                <input type="radio" name="{$key}" id="field{$val}" value="{$val}" class="form-check-input" $checked>
+                <label for="field{$val}" class="form-check-label" >{$label}</label>
+                {$this->getErrorClass($key)}
+            </div>
+HTML;
+
+    }
+
     public function select(string $key, string $label, $options = null ){
         $optionHTML = [];
         $value = $this->getValue($key);
 
         foreach($options as $k => $v){
-            $selected = in_array($k, $value) ? " selected" : "";
+            $selected = $value == $k ? " selected" : "";
              $optionHTML[] = "<option value=\"$k\" $selected>$v</option>";     
         }
         $optionHTML = implode('', $optionHTML);
@@ -44,7 +59,20 @@ HTML;
         return <<<HTML
         <div class="form-group">
             <label for="field{$key}">$label</label>
-            <select id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}[]" multiple> {$optionHTML}</select>
+            <select id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}"> {$optionHTML}</select>
+            {$this->getErrorClass($key)}
+        </div>
+HTML;
+    }
+
+
+    public function textarea(string $key, string $label){
+        $value = $this->getValue($key);
+     
+        return <<<HTML
+        <div class="form-group">
+            <label for="field{$key}">$label</label>
+            <textarea id="field{$key}" class="{$this->getInputClass($key)}" type="text" name="{$key}"> {$value}</textarea>
             {$this->getErrorClass($key)}
         </div>
 HTML;
@@ -74,7 +102,7 @@ HTML;
     public function getErrorClass($key): ?string
     {
         if(isset($this->errors[$key])){
-            if(\is_array($this->errors)){
+            if(\is_array($this->errors[$key])){
                 $error = implode('<br>', $this->errors[$key]);
             }else{
                 $error = $this->errors[$key];
