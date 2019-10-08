@@ -25,7 +25,7 @@ $router
     //PATIENTS
     ->get('/patient', 'patients/index', 'patient')
     ->match('/patient/new', 'patients/new', 'patient_new')
-    ->post('/patient/delete', 'patients/delete', 'patient_delete')
-    ->match('/patient/edit/[i:id]', 'patients/edit', 'patient_edit')
-    ->match('/patient/show/[i:id]', 'patients/show', 'patient_show')
+    ->post('/patient/delete/[i:cin]', 'patients/delete', 'patient_delete')
+    ->match('/patient/edit/[i:cin]', 'patients/edit', 'patient_edit')
+    ->match('/patient/show/[i:cin]', 'patients/show', 'patient_show')
     ->run();
