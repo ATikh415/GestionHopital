@@ -46,10 +46,17 @@ class Table{
         );
     }
 
+    public function findWithCin(int $cin){
+        return $this->query("SELECT * FROM {$this->table}
+        WHERE cin = ?",
+        [$cin],
+        true
+        );
+    }
+
     public function create(array $data){
         $sqlParts = [];
-        $par = [];
-        $val = [];
+
         foreach($data as $key => $value){
             $sqlParts[] = "$key = :$key";
         }
@@ -60,6 +67,21 @@ class Table{
             throw new Exception("Impossible d'enregistrer sur la table {$this->table}");
             
         }
+    }
+
+        public function update(array $data, int $cin){
+            $sqlParts = [];
+    
+            foreach($data as $key => $value){
+                $sqlParts[] = "$key = :$key";
+            }
+            $ok = $this->query("UPDATE {$this->table} SET " . (implode(', ', $sqlParts)) . " WHERE cin = :cin",
+            array_merge($data, ['cin' => $cin])
+            );
+            if($ok === false){
+                throw new Exception("Impossible d'enregistrer sur la table {$this->table}");
+                
+            }
     }
 
     
