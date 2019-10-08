@@ -93,4 +93,36 @@ class Validator{
         return false;
     }
 
+    public function toNumeric($field){
+        if(!is_numeric($this->data[$field])){
+            $this->errors[$field] = "Le cin doit numeric";
+            return false;
+        }
+        return true;
+    }
+
+    public function alpha($field){
+        if(!\preg_match("#^[a-zA-Z ]*$#", $this->data[$field])){
+            $this->errors[$field] = "Le champs doit comporter que de lettre alphabetique";
+            return false;
+        }
+        return true;
+    }
+
+    public function phone($field){
+        if(!\preg_match('#^(7)[0678][ ]([0-9]){3}([ ][0-9]{2}){2}$#', $this->data[$field])){
+            $this->errors[$field] = "Le numero doit commemcer par 70 ou 76 ou 77 ou 78 au format : 77 102 02 02";
+            return false;
+        }
+        return true;
+    }
+
+    public function radio($field){
+        if(empty($this->data[$field])){
+            $this->errors[$field] = "Vous devez choisir le sexe";
+            return false;
+        }
+        return true;
+    }
+
 }
