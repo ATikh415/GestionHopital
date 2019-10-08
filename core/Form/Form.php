@@ -84,8 +84,10 @@ HTML;
         }
         $method = 'get' . str_replace(' ', '', ucwords(str_replace('_',' ', $key)));
         $value = $this->data->$method();
+        
+
         if($value instanceof DateTimeInterface){
-            return $value->format('Y-m-d H:i:s');
+            return $value->format('Y-m-d');
         }
         return $value;
     }
