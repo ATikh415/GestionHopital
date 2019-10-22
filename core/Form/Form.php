@@ -15,17 +15,16 @@ class Form{
         $this->errors = $errors;
     }
 
-    public function input(string $key, string $label, string $type, ?string $placeholde = null){
+    public function input(string $key, string $label, string $type, ?string $icone = null){
         $value = $this->getValue($key);
 
         return <<<HTML
-        <div class="col-sm-6">
-            <div class="form-group">
-                <label for="field{$key}">{$label}</label>
-                <input type="{$type}" name="{$key}" id="field{$key}" value="{$value}" class="{$this->getInputClass($key)}" placeholder = "$placeholde">
-                {$this->getErrorClass($key)}
-            </div>
-        </div>
+                 <div class="input-field col s6">
+                    {$icone}
+                    <label for="field_{$key}">{$label}</label>
+                    <input type="{$type}" name="{$key}" id="field_{$key}" value="{$value}" class="{$this->getInputClass($key)}" >
+                    {$this->getErrorClass($key)}
+                </div>
 HTML;
 
     }
@@ -36,11 +35,11 @@ HTML;
         $checked = $value == $val ? ' checked' : "";
 
         return <<<HTML
-            <div class="form-check">
-                <input type="radio" name="{$key}" id="field{$val}" value="{$val}" class="form-check-input" $checked>
-                <label for="field{$val}" class="form-check-label" >{$label}</label>
-                {$this->getErrorClass($key)}
-            </div>
+            <label for="field{$val}" >
+                <input type="radio" name="{$key}" id="field{$val}" value="{$val}" $checked>
+                <span>{$label}</span>
+            </label>
+            {$this->getErrorClass($key)}
 HTML;
 
     }
@@ -57,9 +56,9 @@ HTML;
         
 
         return <<<HTML
-        <div class="form-group">
-            <label for="field{$key}">$label</label>
-            <select id="field{$key}" class="{$this->getInputClass($key)}" name="{$key}"> {$optionHTML}</select>
+        <div class="input-field col s6">
+            <select id="field_{$key}" class="{$this->getInputClass($key)}" name="{$key}"> {$optionHTML}</select>
+            <label for="field_{$key}">$label</label>
             {$this->getErrorClass($key)}
         </div>
 HTML;
@@ -71,8 +70,8 @@ HTML;
      
         return <<<HTML
         <div class="form-group">
-            <label for="field{$key}">$label</label>
-            <textarea id="field{$key}" class="{$this->getInputClass($key)}" type="text" name="{$key}"> {$value}</textarea>
+            <label for="field_{$key}">$label</label>
+            <textarea id="field_{$key}" class="{$this->getInputClass($key)}" type="text" name="{$key}"> {$value}</textarea>
             {$this->getErrorClass($key)}
         </div>
 HTML;
@@ -94,7 +93,7 @@ HTML;
 
     public function getInputClass($key): string
     {
-        $class = 'form-control';
+        $class = 'validate';
         if(isset($this->errors[$key])){
             $class .= ' is-invalid';
         }

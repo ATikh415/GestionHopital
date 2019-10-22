@@ -30,4 +30,8 @@ class App{
         }
         return $this->dbInstance;
     }
+
+    public function e($var){
+        return htmlentities($var);
+    }
 }

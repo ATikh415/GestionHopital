@@ -14,6 +14,17 @@ class Event{
     private $cin;
     private $cin_medecins;
     private $id_secretariats;
+    private $name_patient;
+    private $date_naissance_p;
+    private $lieu_naissance_p;
+    private $phone_patient;
+    private $addr_patient;
+    private $name_med;
+    private $phone_med;
+    private $name_service;
+    private $name_sp;
+    private $valid;
+   
 
 
     public function getId(): ?int
@@ -21,14 +32,6 @@ class Event{
         return $this->id;
     }
  
-    public function setId($id): self
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-
     public function getName(): ?string
     {
         return $this->name;
@@ -52,6 +55,11 @@ class Event{
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getDate()
+    {
+        return new DateTime($this->start);
     }
 
     
@@ -91,7 +99,7 @@ class Event{
         return $this;
     }
 
-    public function getCin_medecins()
+    public function getCinMedecins()
     {
         return $this->cin_medecins;
     }
@@ -103,22 +111,72 @@ class Event{
         return $this;
     }
 
-    /**
-     * Get the value of id_secretariats
-     */ 
+
     public function getId_secretariats()
     {
         return $this->id_secretariats;
     }
 
-    /**
-     * Set the value of id_secretariats
-     *
-     * @return  self
-     */ 
     public function setId_secretariats($id_secretariats)
     {
         $this->id_secretariats = $id_secretariats;
+
+        return $this;
+    }
+
+    public function getName_Patient(): ?string
+    {
+        return $this->name_patient;
+    }
+
+    public function getPhone_Patient(): ?string
+    {
+        return $this->phone_patient;
+    }
+
+    public function getAddr_Patient(): ?string
+    {
+        return $this->addr_patient;
+    }
+
+    public function getName_Med()
+    {
+        return $this->name_med;
+    }
+
+    public function getPhone_Med(): ?string
+    {
+        return $this->phone_med;
+    }
+
+    public function getName_Sp()
+    {
+        return $this->name_sp;
+    }
+
+    public function getName_Service()
+    {
+        return $this->name_service;
+    }
+
+    public function getDate_Naissance()
+    {
+        return new DateTime($this->date_naissance_p);
+    }
+
+    public function getLieu_Naissance()
+    {
+        return $this->lieu_naissance_p;
+    }
+
+    public function getValid()
+    {
+        return $this->valid;
+    }
+
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
 
         return $this;
     }

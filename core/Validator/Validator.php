@@ -48,6 +48,19 @@ class Validator{
         return true;
     }
 
+    public function dateAfter($field){
+        if($this->date($field)){
+            $start = DateTime::createFromFormat('Y-m-d', $this->data[$field]);
+            $dateDay = DateTime::createFromFormat('Y-m-d', date('Y-m-d'));
+            if($start->getTimestamp() < $dateDay->getTimestamp() ){
+                $this->errors[$field] = "Impossible de choisir une date anterieur";
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     public function dateDay($field){
         if($this->date($field)){
             $day = strftime('%A', strtotime($this->data[$field]));
@@ -83,7 +96,7 @@ class Validator{
             }
             $st = intval($start->format('Y-m-d'));
             $e = intval($end->format('H'));
-            if($st < 12 || $e > 15 ){
+            if(!($st > 8 && $e < 12  || $st > 15 && $e < 17) ){
                 $this->errors[$startField] = "L'heure de rendez-vous est de 08h a 12h et de 15h a 17h";
                 return false;
             }
@@ -91,6 +104,18 @@ class Validator{
             return true;
         }
         return false;
+    }
+
+    public function beforeDate($startField, $endField){
+        if($this->date($startField) && $this->date($endField)){
+            $start = DateTime::createFromFormat('Y-m-d', $this->data[$startField]);
+            $end = DateTime::createFromFormat('Y-m-d', $this->data[$endField]);
+            if($start->getTimestamp() >= $end->getTimestamp()){
+                $this->errors[$startField] = "La date de demmarage doit etre antieur a la date de fin";
+                return false;
+            }
+            return true;
+        }
     }
 
     public function toNumeric($field){
@@ -103,6 +128,14 @@ class Validator{
 
     public function alpha($field){
         if(!\preg_match("#^[a-zA-Z ]*$#", $this->data[$field])){
+            $this->errors[$field] = "Le champs doit comporter que de lettre alphabetique";
+            return false;
+        }
+        return true;
+    }
+
+    public function alphNum($field){
+        if(!\preg_match("#^[a-zA-Z0-9 ]*$#", $this->data[$field])){
             $this->errors[$field] = "Le champs doit comporter que de lettre alphabetique";
             return false;
         }

@@ -25,6 +25,10 @@ class Table{
         return $this->query("SELECT * FROM {$this->table}");
     }
 
+    public function allById(){
+        return $this->query("SELECT * FROM {$this->table} ORDER BY id DESC");
+    }
+
     public function extract(string $key, string $value){
         $records = $this->all();
         $return = [];
@@ -69,7 +73,7 @@ class Table{
         }
     }
 
-        public function update(array $data, int $cin){
+    public function update(array $data, int $cin){
             $sqlParts = [];
     
             foreach($data as $key => $value){
@@ -82,6 +86,33 @@ class Table{
                 throw new Exception("Impossible d'enregistrer sur la table {$this->table}");
                 
             }
+    }
+
+    public function updateById(array $data, int $id){
+        $sqlParts = [];
+
+        foreach($data as $key => $value){
+            $sqlParts[] = "$key = :$key";
+        }
+        $ok = $this->query("UPDATE {$this->table} SET " . (implode(', ', $sqlParts)) . " WHERE id = :id",
+        array_merge($data, ['id' => $id])
+        );
+        if($ok === false){
+            throw new Exception("Impossible d'enregistrer sur la table {$this->table}");
+            
+        }
+}
+
+    public function delete(int $cin){
+        $this->query("DELETE FROM {$this->table} WHERE cin = :cin",
+        ['cin' => $cin]);
+
+    }
+
+    public function deleteById(int $id){
+       $ok = $this->query("DELETE FROM {$this->table} WHERE id = :id",
+        ['id' => $id]);
+        
     }
 
     

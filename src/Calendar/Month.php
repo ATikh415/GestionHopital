@@ -33,6 +33,10 @@ class Month{
         return $this->months[$this->month - 1] .' '. $this->year;
     }
 
+    public function getDay(){
+        return $this->days;
+    }
+
     public function getWeeks(): int{
         $start = $this->getStartingDay();
       

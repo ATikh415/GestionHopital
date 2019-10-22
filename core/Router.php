@@ -3,6 +3,7 @@
 namespace Core;
 
 use AltoRouter;
+use App\Security\ForbbidenExeption;
 
 class Router{
 
@@ -39,15 +40,32 @@ class Router{
 
     public function run(): self
     {
+           
         $match = $this->router->match();
         $view = $match['target'] ?: 'e404';
         $params = $match['params'];
         $router = $this;
-        \ob_start();
-        require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
-        $content = \ob_get_clean();
-        require $this->viewPath . DIRECTORY_SEPARATOR .  'layouts/default.php';
-
+        $layout = 'layouts/default';
+      
+        if(strpos($view, 'admin/') !== false){
+            $layout = 'admin/layouts/default';
+        }
+        if(strpos($view, 'secretary/') !== false){
+            $layout = 'secretary/layouts/default';
+        }
+        if(strpos($view, 'doctor/') !== false){
+            $layout = 'doctor/layouts/default';
+        }
+        try{
+            \ob_start();
+            require $this->viewPath . DIRECTORY_SEPARATOR . $view . '.php';
+            $content = \ob_get_clean();
+            require $this->viewPath . DIRECTORY_SEPARATOR . $layout . '.php';
+        }catch(ForbbidenExeption $e){
+            header('location: ' . $router->url('login') . '?forbidden=1');
+        }
+       
+        
         return $this;
     }
 

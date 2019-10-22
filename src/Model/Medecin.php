@@ -4,11 +4,16 @@ namespace App\Model;
 
 class Medecin{
     private $cin;
-    private $name;
-    private $phone;
-    private $addr;
+    private $name_med;
+    private $phone_med;
+    private $login;
+    private $password;
+    private $addr_med;
+    private $id_users;
     private $id;
+    private $name_sp;
     private $id_med_specialites;
+    private $name_service;
 
 
     public function getCin(): int
@@ -23,43 +28,43 @@ class Medecin{
         return $this;
     }
 
-    public function getName():string
+    public function getNameMed():string
     {
-        return $this->name;
+        return $this->name_med;
     }
 
     public function setName($name): self
     {
-        $this->name = $name;
+        $this->name_med = $name;
 
         return $this;
     }
     
     public function getPhone(): string
     {
-        return $this->phone;
+        return $this->phone_med;
     }
 
     public function setPhone($phone): self
     {
-        $this->phone = $phone;
+        $this->phone_med = $phone;
 
         return $this;
     }
 
     public function getAddr(): string
     {
-        return $this->addr;
+        return $this->addr_med;
     }
 
     public function setAddr($addr): self
     {
-        $this->addr = $addr;
+        $this->addr_med = $addr;
 
         return $this;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -71,7 +76,7 @@ class Medecin{
         return $this;
     }
 
-    public function getId_med_specialites(): int
+    public function getIdMedSpecialites()
     {
         return $this->id_med_specialites;
     }
@@ -79,6 +84,60 @@ class Medecin{
     public function setId_med_specialites(int $id_med_specialites): self
     {
         $this->id_med_specialites = $id_med_specialites;
+
+        return $this;
+    }
+
+    public function getNameSp()
+    {
+        return $this->name_sp;
+    }
+
+    public function getNameService()
+    {
+        return $this->name_service;
+    }
+
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    public function setLogin($login)
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_users
+     */ 
+    public function getIdUsers()
+    {
+        return $this->id_users;
+    }
+
+    /**
+     * Set the value of id_users
+     *
+     * @return  self
+     */ 
+    public function setId_users($id_users)
+    {
+        $this->id_users = $id_users;
 
         return $this;
     }
